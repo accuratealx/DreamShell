@@ -91,11 +91,19 @@ class TDreamServerShellCommandLine: Managed
 	//Получить булевское значение по номеру параметра
 	bool GetBoolParamByIndex(int prmIdx)
 	{
-		if (prmIdx > FParameters.Count() - 1)
+		if (prmIdx < 0 || prmIdx > FParameters.Count() - 1)
 			return false;
+		
 		string prm = FParameters.Get(prmIdx);
 		prm.Trim();
 		prm.ToLower();
 		return prm == "yes" || prm == "1" || prm == "on";
+	}
+	
+	int GetIntParamByIndex(int prmIdx, int defValue = -1)
+	{
+		if (prmIdx < 0 || prmIdx > FParameters.Count() - 1)
+			return defValue;
+		return FParameters.Get(prmIdx).ToInt();
 	}
 }
