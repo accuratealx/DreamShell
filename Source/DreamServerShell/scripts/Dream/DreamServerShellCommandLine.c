@@ -71,12 +71,44 @@ class TDreamServerShellCommandLine: Managed
 		return FCommandName;
 	}
 	
-	//Строка со всеми парамтрами как пришла с клиента
+	//Сырая строка параметров
 	string ParamString()
 	{
 		return FParamString;
 	}
-	
+
+	//Строка параметров начиная с индекса
+	string ParamStringFromIndex(int startIdx)
+	{
+		bool fquote = false;
+		string result = "";
+		int cidx = 0;
+		//string part = "";
+		for (int i = 0; i < FParamString.Length(); i++)
+		{
+			//Текущий символ
+			string s = FParamString.Get(i);
+			
+			//Если достигли нужного индекса, то копируем все подряд
+			if (cidx == startIdx)
+			{
+				result = result + s;
+				continue;
+			}
+			
+			if (s == "'")
+			{
+				fquote = !fquote;
+				continue;
+			}
+		
+			if (s == " " && !fquote)
+				cidx = cidx + 1;
+		}
+		
+		return result;
+	}
+		
 	//Массив параметров
 	TStringArray Parameters()
 	{
@@ -105,5 +137,12 @@ class TDreamServerShellCommandLine: Managed
 		if (prmIdx < 0 || prmIdx > FParameters.Count() - 1)
 			return defValue;
 		return FParameters.Get(prmIdx).ToInt();
+	}
+	
+	string GetStrParamByIndex(int prmIdx, string defValue = "")
+	{
+		if (prmIdx < 0 || prmIdx > FParameters.Count() - 1)
+			return defValue;
+		return FParameters.Get(prmIdx);
 	}
 }

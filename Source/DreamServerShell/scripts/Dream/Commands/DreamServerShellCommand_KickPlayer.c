@@ -12,9 +12,9 @@ class TDreamServerShellCommand_KickPlayer: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: KickPlayer [ID]");
+		result.Insert("Example: KickPlayer [PlayerID]");
 		result.Insert("Parameters:");
-		result.Insert("  ID - Player id");
+		result.Insert("  PlayerID - ID player from PlayerList");
 		return result;
 	}	
 	
@@ -22,10 +22,10 @@ class TDreamServerShellCommand_KickPlayer: TDreamServerShellCommand
 	{
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
-		string id = data.Command.Parameters()[0];
+		string id = data.Command.GetStrParamByIndex(0);
 		PlayerBase player = GetPlayerByID(id);
 		if (!player)
-			result.Error = string.Format("player id %1 not found", id);
+			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
 			MissionServer mission = MissionServer.Cast(GetGame().GetMission());
 			GetGame().SendLogoutTime(player, 0);

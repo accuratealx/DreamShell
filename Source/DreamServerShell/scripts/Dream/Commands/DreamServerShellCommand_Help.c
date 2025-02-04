@@ -25,7 +25,7 @@ class TDreamServerShellCommand_Help: TDreamServerShellCommand
 		if (data.Command.Parameters().Count() == 0)
 			result.Result = Help();
 		else {
-			string cmdName = data.Command.Parameters().Get(0);
+			string cmdName = data.Command.GetStrParamByIndex(0);
 			TDreamServerShellCommand cmd = data.CommandList.GetCommand(cmdName);
 			
 			if (cmd == null)

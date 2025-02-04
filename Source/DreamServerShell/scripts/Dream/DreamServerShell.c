@@ -1,5 +1,4 @@
-#define DREAM_SHELL
-const string DREAM_SHELL_VERSION = "0.4";
+const string DREAM_SHELL_VERSION = "0.5";
 
 class TDreamServerShell: TDreamServerShellBase
 {
@@ -147,8 +146,15 @@ class TDreamServerShell: TDreamServerShellBase
 			return;
 		}
 
-		for (int i = 0; i < result.Result.Count(); i++)
-			player.RPCSingleParam(RPC_DREAM_SHELL_SEND_RESULT, new Param1<string>(result.Result.Get(i)), true, sender);
+		//Отсылка параметров
+		if (result.Result.Count() == 0)
+		{
+			string msg = "OK";
+			player.RPCSingleParam(RPC_DREAM_SHELL_SEND_RESULT, new Param1<string>(msg), true, sender);
+		} else {
+			for (int i = 0; i < result.Result.Count(); i++)
+				player.RPCSingleParam(RPC_DREAM_SHELL_SEND_RESULT, new Param1<string>(result.Result.Get(i)), true, sender);
+		}
 	}
 	
 	//Прием событий

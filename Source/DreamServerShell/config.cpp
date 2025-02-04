@@ -23,14 +23,14 @@ class CfgMods
 			class worldScriptModule
 			{
 				files[] = {
-					"DreamServer/DreamServerShell/scripts/4_world"
+					"DreamShell/DreamServerShell/scripts/4_world"
 				};
 			};
 			class missionScriptModule
 			{
 				files[] = {
-					"DreamServer/DreamServerShell/scripts/5_mission",
-					"DreamServer/DreamServerShell/scripts/Dream"
+					"DreamShell/DreamServerShell/scripts/5_mission",
+					"DreamShell/DreamServerShell/scripts/Dream"
 				};				
 			};
 		};

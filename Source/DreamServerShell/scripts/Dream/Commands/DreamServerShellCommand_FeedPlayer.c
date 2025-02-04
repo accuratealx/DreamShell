@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
+class TDreamServerShellCommand_FeedPlayer: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_DropPlayerItems()
+	void TDreamServerShellCommand_FeedPlayer()
 	{
-		Name = "DropPlayerItems";
-		Description = "Drop player items to the ground";
+		Name = "FeedPlayer";
+		Description = "Feed player";
 		MinimalParamCount = 1;
 	}
 	
@@ -12,7 +12,7 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: DropPlayerItems [PlayerID]");
+		result.Insert("Example: FeedPlayer [PlayerID]");
 		result.Insert("Parameters:");
 		result.Insert("  PlayerID - ID player from PlayerList");
 		return result;
@@ -27,7 +27,11 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		if (!player)
 			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			player.DropAllItems();
+			player.GetStatEnergy().Set(player.GetStatEnergy().GetMax());
+			player.GetStatWater().Set(player.GetStatWater().GetMax());
+			player.GetStatDiet().Set(player.GetStatDiet().GetMax());
+			
+			player.SetSynchDirty();
 		};
 		
 		return result;

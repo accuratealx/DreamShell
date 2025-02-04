@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
+class TDreamServerShellCommand_VomitPlayer: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_DropPlayerItems()
+	void TDreamServerShellCommand_VomitPlayer()
 	{
-		Name = "DropPlayerItems";
-		Description = "Drop player items to the ground";
+		Name = "VomitPlayer";
+		Description = "Make the player vomit";
 		MinimalParamCount = 1;
 	}
 	
@@ -12,9 +12,10 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: DropPlayerItems [PlayerID]");
+		result.Insert("Example: VomitPlayer [PlayerID] <Duration>");
 		result.Insert("Parameters:");
 		result.Insert("  PlayerID - ID player from PlayerList");
+		result.Insert("  Duration - Vomit duration (default 5 sec)");
 		return result;
 	}	
 	
@@ -27,7 +28,16 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		if (!player)
 			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			player.DropAllItems();
+			//Длительность рвоты
+			int duration = data.Command.GetIntParamByIndex(1, 5);
+			
+			//Менеджер симптомов
+			SymptomManager mgr = player.GetSymptomManager();
+			
+			//Рвота
+			SymptomBase vomit = mgr.QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_VOMIT);
+			if (vomit)			
+				vomit.SetDuration(duration);
 		};
 		
 		return result;

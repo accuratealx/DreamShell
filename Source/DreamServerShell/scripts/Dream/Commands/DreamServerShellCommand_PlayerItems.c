@@ -12,9 +12,9 @@ class TDreamServerShellCommand_PlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: PLayerItems [ID]");
+		result.Insert("Example: PLayerItems [PlayerID]");
 		result.Insert("Parameters:");
-		result.Insert("  ID - Player id");
+		result.Insert("  PlayerID - ID player from PlayerList");
 		return result;
 	}
 	
@@ -22,27 +22,32 @@ class TDreamServerShellCommand_PlayerItems: TDreamServerShellCommand
 	{
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
-		string id = data.Command.Parameters()[0];
+		string id = data.Command.GetStrParamByIndex(0);
 		PlayerBase player = GetPlayerByID(id);
 		if (!player)
-			result.Error = string.Format("player id %1 not found", id);
+			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			//Получим полный список объектов
-			array<EntityAI> items = new array<EntityAI>;
-			player.GetInventory().EnumerateInventory(InventoryTraversalType.INORDER, items);
-
-			//Вывод
-			result.Result.Insert(player.GetIdentity().GetName() + " inventory:");
-			for (int i = 0; i < items.Count(); i++)
+			GameInventory inv = player.GetInventory();
+			if (inv)
 			{
-				EntityAI item = items.Get(i);
-				if (item.IsKindOf("SurvivorBase")) 
-					continue;
-				
-				result.Result.Insert("  " + GetItemInfo(item));
-			}
-			int cnt = items.Count() - 1;
-			result.Result.Insert("count: " + cnt);
+				//Получим полный список объектов
+				array<EntityAI> items = new array<EntityAI>;
+				inv.EnumerateInventory(InventoryTraversalType.INORDER, items);
+	
+				//Вывод
+				result.Result.Insert(player.GetIdentity().GetName() + " inventory:");
+				for (int i = 0; i < items.Count(); i++)
+				{
+					EntityAI item = items.Get(i);
+					if (item.IsKindOf("SurvivorBase")) 
+						continue;
+					
+					result.Result.Insert(string.Format("  %1 %2", i.ToStringLen(3), GetItemInfo(item)));
+				}
+				int cnt = items.Count() - 1;
+				result.Result.Insert("count: " + cnt);
+			} else 
+				result.Error = ERROR_CANT_GET_INVENTORY;
 		};
 		
 		return result;

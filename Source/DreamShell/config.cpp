@@ -16,21 +16,21 @@ class CfgMods
 			"Mission"
 		};
 		
-		inputs="Dream/DreamShell/inputs.xml";
+		inputs="DreamShell/DreamShell/inputs.xml";
 		
 		class defs
 		{
 			class worldScriptModule
 			{
 				files[] = {
-					"Dream/DreamShell/scripts/4_world",
-					"Dream/DreamShell/scripts/Dream"
+					"DreamShell/DreamShell/scripts/4_world",
+					"DreamShell/DreamShell/scripts/Dream"
 				};
 			};
 			class missionScriptModule
 			{
 				files[] = {
-					"Dream/DreamShell/scripts/5_mission"
+					"DreamShell/DreamShell/scripts/5_mission"
 				};
 			};
 		};

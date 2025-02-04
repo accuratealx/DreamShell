@@ -171,7 +171,7 @@ PanelWidgetClass Root {
        vexactpos 1
        hexactsize 1
        vexactsize 1
-       imageTexture "{2F015354F923C290}Dream/DreamShell/gui/images/Copy.edds"
+       imageTexture "{8CFDEFC7145F1C5B}DreamShell/DreamShell/gui/images/Copy.edds"
        mode blend
        "src alpha" 1
        "stretch mode" stretch_w_h

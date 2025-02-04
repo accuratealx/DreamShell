@@ -1,0 +1,54 @@
+class TDreamServerShellCommand_HealPlayer: TDreamServerShellCommand
+{
+	void TDreamServerShellCommand_HealPlayer()
+	{
+		Name = "HealPlayer";
+		Description = "Heal player";
+		MinimalParamCount = 1;
+	}
+	
+	override TStringArray Help()
+	{
+		TStringArray result = new TStringArray();
+		result.Insert("Name: " + Name);
+		result.Insert("Description: " + Description);
+		result.Insert("Example: HealPlayer [PlayerID]");
+		result.Insert("Parameters:");
+		result.Insert("  PlayerID - ID player from PlayerList");
+		return result;
+	}	
+	
+	override TDreamServerShellCommandResult Execute(TDreamServerShellCommandData data)
+	{
+		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
+		
+		string id = data.Command.GetStrParamByIndex(0);
+		PlayerBase player = GetPlayerByID(id);
+		if (!player)
+			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
+		else {
+			player.SetHealth(player.GetMaxHealth("", ""));
+			player.SetHealth("", "Blood", player.GetMaxHealth("", "Blood"));
+			player.SetHealth("", "Shock", player.GetMaxHealth("", "Shock"));
+			
+			player.RemoveAllAgents();
+			player.GetModifiersManager().DeactivateAllModifiers();
+			player.GetBleedingManagerServer().RemoveAllSources();
+			player.SetBrokenLegs(eBrokenLegs.NO_BROKEN_LEGS);
+			
+			player.GetSymptomManager().CleanUpPrimaryQueue();
+			player.GetStatStamina().Set(player.GetStatStamina().GetMax());
+			player.GetStatToxicity().Set(player.GetStatToxicity().GetMin());
+			player.GetStatTremor().Set(player.GetStatTremor().GetMin());
+			player.GetStatHeatComfort().Set(0);
+			player.GetStatSpecialty().Set(0);
+
+			if (player.IsUnconscious())
+				DayZPlayerSyncJunctures.SendPlayerUnconsciousness(player, false);
+			
+			player.SetSynchDirty();
+		};
+		
+		return result;
+	}
+}

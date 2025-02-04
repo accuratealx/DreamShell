@@ -12,9 +12,9 @@ class TDreamServerShellCommand_GodMode: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: GodMode [ID] <Mode>");
+		result.Insert("Example: GodMode [PlayerID] <Mode>");
 		result.Insert("Parameters:");
-		result.Insert("  ID - Player id");
+		result.Insert("  PlayerID - ID player from PlayerList");
 		result.Insert("  Mode - On / Off (if empty show status)");
 		return result;
 	}	
@@ -23,10 +23,10 @@ class TDreamServerShellCommand_GodMode: TDreamServerShellCommand
 	{
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
-		string id = data.Command.Parameters()[0];
+		string id = data.Command.GetStrParamByIndex(0);
 		PlayerBase player = GetPlayerByID(id);
 		if (!player)
-			result.Error = string.Format("player id %1 not found", id);
+			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
 			string name = player.GetIdentity().GetName();
 			bool mode;

@@ -23,9 +23,7 @@ class TDreamServerShellCommand_Shutdown: TDreamServerShellCommand
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
 		//Определить длительность
-		int delay = 90;
-		if (data.Command.ParamCount() > 0)
-			delay = data.Command.Parameters()[0].ToInt();
+		int delay = data.Command.GetIntParamByIndex(0, 90);
 		
 		//Послать сообщение
 		SendNotify(string.Format("server will shut down for update in %1 seconds", delay));

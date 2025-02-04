@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
+class TDreamServerShellCommand_NotifyPlayer: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_DropPlayerItems()
+	void TDreamServerShellCommand_NotifyPlayer()
 	{
-		Name = "DropPlayerItems";
-		Description = "Drop player items to the ground";
+		Name = "NotifyPlayer";
+		Description = "Notify player";
 		MinimalParamCount = 1;
 	}
 	
@@ -12,9 +12,10 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: DropPlayerItems [PlayerID]");
+		result.Insert("Example: NotifyPlayer [PlayerID] [Message]");
 		result.Insert("Parameters:");
 		result.Insert("  PlayerID - ID player from PlayerList");
+		result.Insert("  Message - Just mesage");
 		return result;
 	}	
 	
@@ -27,7 +28,9 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		if (!player)
 			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			player.DropAllItems();
+			//Получить сырое сообщение без первого параметра
+			string msg = data.Command.ParamStringFromIndex(1);
+			SendNotifyToPlayer(player, msg, MESSAGE_DURATION, ICON_MESSAGE);
 		};
 		
 		return result;

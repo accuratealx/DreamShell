@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
+class TDreamServerShellCommand_BreakPlayerLeg: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_DropPlayerItems()
+	void TDreamServerShellCommand_BreakPlayerLeg()
 	{
-		Name = "DropPlayerItems";
-		Description = "Drop player items to the ground";
+		Name = "BreakPlayerLeg";
+		Description = "Break player leg";
 		MinimalParamCount = 1;
 	}
 	
@@ -12,7 +12,7 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: DropPlayerItems [PlayerID]");
+		result.Insert("Example: BreakPlayerLeg [PlayerID]");
 		result.Insert("Parameters:");
 		result.Insert("  PlayerID - ID player from PlayerList");
 		return result;
@@ -27,7 +27,10 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		if (!player)
 			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			player.DropAllItems();
+			ModifiersManager mgr = player.GetModifiersManager();
+			if (mgr.IsModifierActive(eModifiers.MDF_BROKEN_LEGS))
+				mgr.DeactivateModifier(eModifiers.MDF_BROKEN_LEGS);
+			mgr.ActivateModifier(eModifiers.MDF_BROKEN_LEGS);
 		};
 		
 		return result;

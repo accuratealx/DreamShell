@@ -24,10 +24,7 @@ class TDreamServerShellCommand_PlayerList: TDreamServerShellCommand
 		result.Result.Insert("PlayerList:");		
 		
 		//Определить режим
-		bool full = false;
-		if (data.Command.Parameters().Count() > 0)
-			if (DreamShell_StrToLower(data.Command.Parameters()[0]) == "full")
-				full = true;
+		bool full = DreamShell_StrToLower(data.Command.GetStrParamByIndex(0)) == "full";
 		
 		array<Man> players = new array<Man>();
 		GetGame().GetPlayers(players);

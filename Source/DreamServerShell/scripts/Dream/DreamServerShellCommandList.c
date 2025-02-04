@@ -49,20 +49,32 @@ class TDreamServerShellCommandList: Managed
 	void RegisterCommands()
 	{
 		AddCommand(new TDreamServerShellCommand_Author());
-		AddCommand(new TDreamServerShellCommand_Version());
-		AddCommand(new TDreamServerShellCommand_Welcome());
-		AddCommand(new TDreamServerShellCommand_Help());
+		AddCommand(new TDreamServerShellCommand_BreakPlayerLeg());
 		AddCommand(new TDreamServerShellCommand_CommandList());
-		AddCommand(new TDreamServerShellCommand_Notify());
-		AddCommand(new TDreamServerShellCommand_ExportItems());
-		AddCommand(new TDreamServerShellCommand_Shutdown());
-		AddCommand(new TDreamServerShellCommand_PlayerList());
-		AddCommand(new TDreamServerShellCommand_KillPlayer());
-		AddCommand(new TDreamServerShellCommand_KickPlayer());
-		AddCommand(new TDreamServerShellCommand_PlayerItems());
+		AddCommand(new TDreamServerShellCommand_DeleteObjects());
+		AddCommand(new TDreamServerShellCommand_DeletePlayerItem());
+		AddCommand(new TDreamServerShellCommand_DeletePlayerItems());
+		AddCommand(new TDreamServerShellCommand_DropPlayer());
+		AddCommand(new TDreamServerShellCommand_DropPlayerItem());
 		AddCommand(new TDreamServerShellCommand_DropPlayerItems());
+		AddCommand(new TDreamServerShellCommand_DryPlayer());
+		AddCommand(new TDreamServerShellCommand_ExportItems());
+		AddCommand(new TDreamServerShellCommand_FeedPlayer());
 		AddCommand(new TDreamServerShellCommand_GodMode());
-		AddCommand(new TDreamServerShellCommand_KillZombies());
+		AddCommand(new TDreamServerShellCommand_HealPlayer());
+		AddCommand(new TDreamServerShellCommand_Help());
+		AddCommand(new TDreamServerShellCommand_KickPlayer());
 		AddCommand(new TDreamServerShellCommand_KillAnimals());
+		AddCommand(new TDreamServerShellCommand_KillPlayer());
+		AddCommand(new TDreamServerShellCommand_KillZombies());
+		AddCommand(new TDreamServerShellCommand_NotifyAll());
+		AddCommand(new TDreamServerShellCommand_NotifyPlayer());
+		AddCommand(new TDreamServerShellCommand_PlayerItems());
+		AddCommand(new TDreamServerShellCommand_PlayerList());
+		AddCommand(new TDreamServerShellCommand_RaisePlayer());
+		AddCommand(new TDreamServerShellCommand_Shutdown());
+		AddCommand(new TDreamServerShellCommand_Version());
+		AddCommand(new TDreamServerShellCommand_VomitPlayer());
+		AddCommand(new TDreamServerShellCommand_Welcome());
 	}
 }

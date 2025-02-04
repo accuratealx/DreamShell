@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
+class TDreamServerShellCommand_DropPlayer: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_DropPlayerItems()
+	void TDreamServerShellCommand_DropPlayer()
 	{
-		Name = "DropPlayerItems";
-		Description = "Drop player items to the ground";
+		Name = "DropPlayer";
+		Description = "Knock a player unconscious";
 		MinimalParamCount = 1;
 	}
 	
@@ -12,7 +12,7 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: DropPlayerItems [PlayerID]");
+		result.Insert("Example: DropPlayer [PlayerID]");
 		result.Insert("Parameters:");
 		result.Insert("  PlayerID - ID player from PlayerList");
 		return result;
@@ -27,9 +27,9 @@ class TDreamServerShellCommand_DropPlayerItems: TDreamServerShellCommand
 		if (!player)
 			result.Error = string.Format(ERROR_PLAYER_NOT_FOUND_FMT, id);
 		else {
-			player.DropAllItems();
+			DayZPlayerSyncJunctures.SendPlayerUnconsciousness(player, true);
 		};
-		
+
 		return result;
 	}
 }

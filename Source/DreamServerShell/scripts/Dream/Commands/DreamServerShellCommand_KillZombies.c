@@ -22,9 +22,7 @@ class TDreamServerShellCommand_KillZombies: TDreamServerShellCommand
 	{
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
-		int r = 100;
-		if (data.Command.ParamCount() > 0)
-			r = data.Command.Parameters()[0].ToInt();
+		int r = data.Command.GetIntParamByIndex(0, 100);
 		
 		array<Object> items = new array<Object>;
 		array<CargoBase> cargoBase = new array<CargoBase>;

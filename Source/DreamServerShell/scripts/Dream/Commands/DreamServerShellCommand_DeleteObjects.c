@@ -1,9 +1,9 @@
-class TDreamServerShellCommand_KillAnimals: TDreamServerShellCommand
+class TDreamServerShellCommand_DeleteObjects: TDreamServerShellCommand
 {
-	void TDreamServerShellCommand_KillAnimals()
+	void TDreamServerShellCommand_DeleteObjects()
 	{
-		Name = "KillAnimals";
-		Description = "Kill animals around player";
+		Name = "DeleteObjects";
+		Description = "Delete objects around player";
 		MinimalParamCount = 0;
 	}
 	
@@ -12,9 +12,9 @@ class TDreamServerShellCommand_KillAnimals: TDreamServerShellCommand
 		TStringArray result = new TStringArray();
 		result.Insert("Name: " + Name);
 		result.Insert("Description: " + Description);
-		result.Insert("Example: KillAnimals <Radius>");
+		result.Insert("Example: DeleteObjects <Radius>");
 		result.Insert("Parameters:");
-		result.Insert("  Radius - Search radius (default 100 meters)");
+		result.Insert("  Radius - Search radius (default 10 meters)");
 		return result;
 	}	
 	
@@ -22,7 +22,7 @@ class TDreamServerShellCommand_KillAnimals: TDreamServerShellCommand
 	{
 		TDreamServerShellCommandResult result = new TDreamServerShellCommandResult();
 		
-		int r = data.Command.GetIntParamByIndex(0, 100);
+		int r = data.Command.GetIntParamByIndex(0, 5);
 		
 		array<Object> items = new array<Object>;
 		array<CargoBase> cargoBase = new array<CargoBase>;
@@ -31,20 +31,15 @@ class TDreamServerShellCommand_KillAnimals: TDreamServerShellCommand
 		int cnt = 0;
 		for (int i = 0; i < items.Count(); i++)
 		{
-			Object obj = items.Get(i);
-			
-			if (!obj.IsKindOf("AnimalBase"))
+			ItemBase obj = ItemBase.Cast(items.Get(i));
+			if (!obj)
 				continue;
 			
-			EntityAI ZombieAI = EntityAI.Cast(obj);
-			if (ZombieAI)
-			{
-				cnt++;
-				ZombieAI.SetHealth(0);
-			}
+			GetGame().ObjectDelete(obj);
+			cnt++;
 		}
 		
-		result.Result.Insert(string.Format("Kill %1 animals", cnt.ToString()));
+		result.Result.Insert(string.Format("Delete %1 objects", cnt.ToString()));
 		return result;
 	}
 }

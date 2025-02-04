@@ -33,13 +33,13 @@ class TDreamShellMenu: UIScriptedMenu
 	//Переопределить этот метод для замены фоновой картинки
 	string GetBackgroundImage()
 	{
-		return "Dream/DreamShell/gui/images/background.edds";
+		return "DreamShell/DreamShell/gui/images/background.edds";
 	}
 	
 	//Переопределить этот метод для замены формы
 	string GetLayoutFile()
 	{
-		return "Dream/DreamShell/gui/layout/DreamShellMenu.layout";
+		return "DreamShell/DreamShell/gui/layout/DreamShellMenu.layout";
 	}
 	
 	void Show()
