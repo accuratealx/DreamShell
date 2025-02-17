@@ -253,14 +253,6 @@ class TDreamShellMenu: UIScriptedMenu
 				Param1<string> prm = new Param1<string>("");
 				if (ctx.Read(prm))
 					AddStringToLog(prm.param1);
-			break ;
-			
-			//Вывести уведомление сверху для всех игроков
-			case RPC_DREAM_SHELL_SEND_MESSAGE:
-				//Duration, Message, Icon
-				Param3<float, string, string> prm3 = new Param3<float, string, string>(0, "", "");
-				if (ctx.Read(prm3))
-					NotificationSystem.AddNotificationExtended(prm3.param1, "#DREAM_SHELL_NOTIFY_TITLE", prm3.param2, prm3.param3);
 			break;
 		}
 	}
