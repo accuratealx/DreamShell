@@ -1,4 +1,4 @@
-const string DREAM_SHELL_VERSION = "0.5";
+const string DREAM_SHELL_VERSION = "0.5.1";
 
 class TDreamServerShell: TDreamServerShellBase
 {

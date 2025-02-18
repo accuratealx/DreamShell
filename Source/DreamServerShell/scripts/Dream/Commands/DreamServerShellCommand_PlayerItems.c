@@ -55,7 +55,7 @@ class TDreamServerShellCommand_PlayerItems: TDreamServerShellCommand
 	
 	private string GetItemInfo(EntityAI item)
 	{
-		string name = item.ClassName();
+		string name = item.GetType();
 		string health = GetItemHealth(item);
 		string quant = GetQuantity(item);
 		return string.Format("%1 (%2, %3)", name, health, quant);
